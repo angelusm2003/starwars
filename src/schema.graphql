@@ -1,0 +1,65 @@
+type ApiRoot {
+  films: [Film]
+  people: [Person]
+  planets: [Planet]
+  species: [Species]
+  starships: [Starship]
+  vehicles: [Vehicle]
+}
+
+type Film {
+  title: String
+  episode_id: Int
+  # Define other fields from Star Wars API
+}
+
+type Person {
+  name: String
+  height: String
+  # Define other fields from Star Wars API
+}
+
+type Planet {
+  name: String
+  climate: String
+  # Define other fields from Star Wars API
+}
+
+type Species {
+  name: String
+  classification: String
+  # Define other fields from Star Wars API
+}
+
+type Starship {
+  name: String
+  model: String
+  # Define other fields from Star Wars API
+}
+
+type Vehicle {
+  name: String
+  model: String
+  # Define other fields from Star Wars API
+}
+
+type Query {
+  root: ApiRoot
+  # Add queries to fetch data from Star Wars API
+  film(id: Int!): Film
+  person(id: Int!): Person
+  planet(id: Int!): Planet
+  species(id: Int!): Species
+  starship(id: Int!): Starship
+  vehicle(id: Int!): Vehicle
+}
+
+type Mutation {
+  addNewAttributeOn(
+    modelName: String!
+    id: Int!
+    attribute: String!
+    value: String!
+  ): String
+}
+

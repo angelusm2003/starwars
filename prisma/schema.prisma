@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model AModelExample {
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  name        String?
+  secondModel SecondModel[]
+}
+
+model SecondModel {
+  id              Int            @id @default(autoincrement())
+  AModelExample   AModelExample? @relation(fields: [aModelExampleId], references: [id])
+  aModelExampleId Int?
+}
+
+// Define the Film model
+model Film {
+  id        Int      @id @default(autoincrement())
+  title     String
+  director  String
+  releaseDate  DateTime
+  // Add other fields as needed
+}
