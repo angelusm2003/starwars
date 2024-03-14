@@ -8,8 +8,9 @@ type ApiRoot {
 }
 
 type Film {
-  title: String
+  title: String!
   episode_id: Int
+  director: String!
   # Define other fields from Star Wars API
 }
 
@@ -55,11 +56,9 @@ type Query {
 }
 
 type Mutation {
-  addNewAttributeOn(
-    modelName: String!
+  updateFilm(
     id: Int!
-    attribute: String!
-    value: String!
-  ): String
+    title: String!
+    director: String!
+  ): Film
 }
-

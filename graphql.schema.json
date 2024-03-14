@@ -131,6 +131,22 @@
         "description": null,
         "fields": [
           {
+            "name": "director",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "episode_id",
             "description": null,
             "args": [],
@@ -147,9 +163,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -176,11 +196,11 @@
         "description": null,
         "fields": [
           {
-            "name": "addNewAttributeOn",
+            "name": "updateFilm",
             "description": null,
             "args": [
               {
-                "name": "attribute",
+                "name": "director",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -212,23 +232,7 @@
                 "deprecationReason": null
               },
               {
-                "name": "modelName",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "value",
+                "name": "title",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -245,8 +249,8 @@
               }
             ],
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
+              "kind": "OBJECT",
+              "name": "Film",
               "ofType": null
             },
             "isDeprecated": false,

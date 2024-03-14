@@ -28,21 +28,21 @@ export type ApiRoot = {
 
 export type Film = {
   __typename?: 'Film';
+  director: Scalars['String']['output'];
   episode_id?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addNewAttributeOn?: Maybe<Scalars['String']['output']>;
+  updateFilm?: Maybe<Film>;
 };
 
 
-export type MutationAddNewAttributeOnArgs = {
-  attribute: Scalars['String']['input'];
+export type MutationUpdateFilmArgs = {
+  director: Scalars['String']['input'];
   id: Scalars['Int']['input'];
-  modelName: Scalars['String']['input'];
-  value: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type Person = {
@@ -228,13 +228,14 @@ export type ApiRootResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type FilmResolvers<ContextType = any, ParentType extends ResolversParentTypes['Film'] = ResolversParentTypes['Film']> = {
+  director?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   episode_id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addNewAttributeOn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationAddNewAttributeOnArgs, 'attribute' | 'id' | 'modelName' | 'value'>>;
+  updateFilm?: Resolver<Maybe<ResolversTypes['Film']>, ParentType, ContextType, RequireFields<MutationUpdateFilmArgs, 'director' | 'id' | 'title'>>;
 };
 
 export type PersonResolvers<ContextType = any, ParentType extends ResolversParentTypes['Person'] = ResolversParentTypes['Person']> = {

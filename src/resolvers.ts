@@ -1,4 +1,4 @@
-import { Resolvers, MutationAddNewAttributeOnArgs } from './generated/graphql';
+import { Resolvers } from './generated/graphql';
 import { PrismaClient } from '@prisma/client';
 import fetch from 'node-fetch';
 
@@ -18,23 +18,23 @@ export const resolvers: Resolvers<Context> = {
     // Implement other resolver functions for Star Wars API queries
   },
   Mutation: {
-    addNewAttributeOn: async (_parent, { modelName, id, attribute, value }) => {
-      let model;
-      switch (modelName) {
-        case 'Film':
-          model = prisma.film.update({ where: { id: Number(id) }, data: { [attribute]: value } });
-          break;
-        case 'Person':
-          model = prisma.person.update({ where: { id: Number(id) }, data: { [attribute]: value } });
-          break;
-        // Add cases for other models as needed
-        default:
-          throw new Error('Invalid model name');
+    updateFilm: async (_parent, { id, director, title }) => {
+      // Update the film with the provided ID
+      const updatedFilm = await prisma.film.update({
+        where: { id },
+        data: {
+          director,
+          title,
+        },
+      });
+  
+      // Check if the film was successfully updated
+      if (!updatedFilm) {
+        throw new Error(`Film with ID ${id} not found.`);
       }
-
-      await model;
-      return 'Attribute added successfully';
+  
+      // Return the updated film
+      return updatedFilm;
     },
-    // Implement other mutation resolver functions as needed
-  },
+  }
 };
