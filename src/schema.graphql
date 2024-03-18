@@ -1,64 +1,143 @@
 type ApiRoot {
   films: [Film]
-  people: [Person]
+  Character: [Character]
   planets: [Planet]
+  species: [Species]
+  startships: [Starship]
+  vehicles: [Vehicle]
+}
+
+type Film {
+  id: ID!
+  title: String!
+  episodeID: Int
+  director: String
+  producer: String
+  releaseDate: String
+  characters: [Character]!
+  planets: [Planet]
+  starships: [Starship]
+  vehicles: [Vehicle]
+  species: [Species]
+}
+ 
+type Character {
+  id: ID!
+  name: String!
+  height: String
+  mass: String
+  hairColor: String
+  skinColor: String
+  eyeColor: String
+  birthYear: String
+  gender: String
+  homeworld: Planet
+  films: [Film]!
   species: [Species]
   starships: [Starship]
   vehicles: [Vehicle]
 }
 
-type Film {
-  title: String!
-  episode_id: Int
-  director: String!
-  # Define other fields from Star Wars API
-}
-
-type Person {
-  name: String
-  height: String
-  # Define other fields from Star Wars API
-}
-
 type Planet {
-  name: String
+  id: ID!
+  name: String!
+  diameter: String
+  rotationPeriod: String
+  orbitalPeriod: String
+  gravity: String
+  population: String
   climate: String
-  # Define other fields from Star Wars API
-}
-
-type Species {
-  name: String
-  classification: String
-  # Define other fields from Star Wars API
-}
-
-type Starship {
-  name: String
-  model: String
-  # Define other fields from Star Wars API
+  terrain: String
+  surfaceWater: String
+  residents: [Character]
+  films: [Film]
 }
 
 type Vehicle {
-  name: String
+  id: ID!
+  name: String!
   model: String
-  # Define other fields from Star Wars API
+  manufacturer: String
+  costInCredits: String
+  length: String
+  maxAtmospheringSpeed: String
+  crew: String
+  passengers: String
+  cargoCapacity: String
+  consumables: String
+  vehicleClass: String
+  pilots: [Character]
+  films: [Film]
+}
+
+type Starship {
+  id: ID!
+  name: String!
+  model: String
+  manufacturer: String
+  costInCredits: String
+  length: String
+  maxAtmospheringSpeed: String
+  crew: String
+  passengers: String
+  cargoCapacity: String
+  consumables: String
+  hyperdriveRating: String
+  MGLT: String
+  starshipClass: String
+  pilots: [Character]
+  films: [Film]
+}
+
+type Species {
+  id: ID!
+  name: String!
+  classification: String
+  designation: String
+  averageHeight: String
+  averageLifespan: String
+  eyeColors: String
+  hairColors: String
+  skinColors: String
+  language: String
+  homeworld: Planet
+  people: [Character]
+  films: [Film]
 }
 
 type Query {
   root: ApiRoot
-  # Add queries to fetch data from Star Wars API
-  film(id: Int!): Film
-  person(id: Int!): Person
-  planet(id: Int!): Planet
-  species(id: Int!): Species
-  starship(id: Int!): Starship
-  vehicle(id: Int!): Vehicle
+  # Obtener un personaje por ID
+  character(id: ID!): Character
+  # Obtener una película por ID
+  film(id: ID!): Film
+  # Obtener una nave espacial por ID
+  starship(id: ID!): Starship
+  # Obtener un vehículo por ID
+  vehicle(id: ID!): Vehicle
+  # Obtener un planeta por ID
+  planet(id: ID!): Planet
 }
 
 type Mutation {
-  updateFilm(
-    id: Int!
-    title: String!
-    director: String!
-  ): Film
+  # Crear un nuevo personaje
+  createCharacter(input: CharacterInput!): Character
+  # Actualizar los datos de un personaje existente
+  updateCharacter(id: ID!, input: CharacterInput!): Character
+  # Eliminar un personaje por ID
+  deleteCharacter(id: ID!): ID
+  ########
+  # updateFilm(id: id!, title: String!, director: String!): Film
+  ########
+}
+
+input CharacterInput {
+  name: String!
+  height: String
+  mass: String
+  hairColor: String
+  skinColor: String
+  eyeColor: String
+  birthYear: String
+  gender: String
 }

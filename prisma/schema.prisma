@@ -10,24 +10,109 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-model AModelExample {
-  id          Int           @id @default(autoincrement())
-  email       String        @unique
-  name        String?
-  secondModel SecondModel[]
-}
-
-model SecondModel {
-  id              Int            @id @default(autoincrement())
-  AModelExample   AModelExample? @relation(fields: [aModelExampleId], references: [id])
-  aModelExampleId Int?
-}
-
 // Define the Film model
 model Film {
-  id        Int      @id @default(autoincrement())
-  title     String
-  director  String
-  releaseDate  DateTime
-  // Add other fields as needed
+  id              Int         @id @default(autoincrement())
+  title           String
+  director        String
+  releaseDate     DateTime
+  episodeID       Int?
+  producer        String?
+  characters      Character[] @relation("CharacterFilms")
+  planets         Planet[]    @relation("PlanetFilms")
+  starships       Starship[]  @relation("StarshipFilms")
+  vehicles        Vehicle[]   @relation("VehicleFilms")
+  species         Species[]   @relation("SpeciesFilms")
+}
+
+// Define the Character model
+model Character {
+  id           Int       @id @default(autoincrement())
+  name         String
+  height       String?
+  mass         String?
+  hairColor    String?
+  skinColor    String?
+  eyeColor     String?
+  birthYear    String?
+  gender       String?
+  homeworld    Planet?   @relation("PlanetResidents", fields: [homeworldId], references: [id])
+  homeworldId  Int?
+  films        Film[]    @relation("CharacterFilms")
+  species      Species[] @relation("SpeciesPeople")
+  starships    Starship[] @relation("StarshipPilots")
+  vehicles     Vehicle[]  @relation("VehiclePilots")
+}
+
+// Define the Planet model
+model Planet {
+  id                Int         @id @default(autoincrement())
+  name              String
+  diameter          String?
+  rotationPeriod    String?
+  orbitalPeriod     String?
+  gravity           String?
+  population        String?
+  climate           String?
+  terrain           String?
+  surfaceWater      String?
+  residents         Character[] @relation("PlanetResidents")
+  films             Film[]      @relation("PlanetFilms")
+  species           Species[]   @relation("PlanetHomeworld")
+}
+
+// Define the Vehicle model
+model Vehicle {
+  id                    Int       @id @default(autoincrement())
+  name                  String
+  model                 String?
+  manufacturer          String?
+  costInCredits         String?
+  length                String?
+  maxAtmospheringSpeed  String?
+  crew                  String?
+  passengers            String?
+  cargoCapacity         String?
+  consumables           String?
+  vehicleClass          String?
+  pilots                Character[] @relation("VehiclePilots")
+  films                 Film[]      @relation("VehicleFilms")
+}
+
+// Define the Starship model
+model Starship {
+  id                    Int       @id @default(autoincrement())
+  name                  String
+  model                 String?
+  manufacturer          String?
+  costInCredits         String?
+  length                String?
+  maxAtmospheringSpeed  String?
+  crew                  String?
+  passengers            String?
+  cargoCapacity         String?
+  consumables           String?
+  hyperdriveRating      String?
+  MGLT                  String?
+  starshipClass         String?
+  pilots                Character[] @relation("StarshipPilots")
+  films                 Film[]      @relation("StarshipFilms")
+}
+
+// Define the Species model
+model Species {
+  id                    Int       @id @default(autoincrement())
+  name                  String
+  classification        String?
+  designation           String?
+  averageHeight         String?
+  averageLifespan       String?
+  eyeColors             String?
+  hairColors            String?
+  skinColors            String?
+  language              String?
+  homeworld             Planet?   @relation("PlanetHomeworld", fields: [homeworldId], references: [id])
+  homeworldId           Int?
+  people                Character[] @relation("SpeciesPeople")
+  films                 Film[]      @relation("SpeciesFilms")
 }
