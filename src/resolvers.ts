@@ -1,4 +1,6 @@
+//import { Resolvers, QueryResolvers, MutationResolvers } from './generated/graphql'
 import { Resolvers } from './generated/graphql';
+import { fetchCharactersCount, getCharacterNames } from './dataFetcher'; // Import the functions from dataFetcher.ts
 import { PrismaClient } from '@prisma/client';
 import fetch from 'node-fetch';
 
@@ -7,12 +9,13 @@ const prisma = new PrismaClient();
 interface Context {
   modelName: string;
 }
-
 export const resolvers: Resolvers<Context> = {
   Query: {
     root: () => ({}),
+    //film: async (_parent: any, { id }: { id: number }) => {
     film: async (_parent, { id }) => {
-      return prisma.film.findUnique({
+      //return prisma.film.findUnique({
+      const film = await prisma.film.findUnique({
         where: { id: Number(id) },
         include: {
           characters: true,
@@ -22,8 +25,14 @@ export const resolvers: Resolvers<Context> = {
           species: true,
         },
       });
+
+      if (!film) {
+        return null; // Return null if film is not found
+      }
+      return film; // Return the found film
     },
-    character: async (_parent, { id }) => {
+    //character: async (_parent: any, { id }: { id: number }) => {
+    character: async (_parent, { id }) => { 
       return prisma.character.findUnique({
         where: { id: Number(id) },
         include: {
@@ -35,7 +44,8 @@ export const resolvers: Resolvers<Context> = {
         },
       });
     },
-    planet: async (_parent, { id }) => {
+    //planet: async (_parent: any, { id }: { id: number }) => {
+      planet: async (_parent, { id }) => {
       return prisma.planet.findUnique({
         where: { id: Number(id) },
         include: {
@@ -44,7 +54,8 @@ export const resolvers: Resolvers<Context> = {
         },
       });
     },
-    starship: async (_parent, { id }) => {
+    //starship: async (_parent: any, { id }: { id: number }) => {
+      starship: async (_parent, { id }) => {
       return prisma.starship.findUnique({
         where: { id: Number(id) },
         include: {
@@ -53,7 +64,8 @@ export const resolvers: Resolvers<Context> = {
         },
       });
     },
-    vehicle: async (_parent, { id }) => {
+    //vehicle: async (_parent: any, { id }: { id: number }) => {
+      vehicle: async (_parent, { id }) => {
       return prisma.vehicle.findUnique({
         where: { id: Number(id) },
         include: {
@@ -62,7 +74,8 @@ export const resolvers: Resolvers<Context> = {
         },
       });
     },
-    species: async (_parent, { id }) => {
+    //species: async (_parent: any, { id }: { id: number }) => {
+      species: async (_parent, { id }) => {
       return prisma.species.findUnique({
         where: { id: Number(id) },
         include: {
@@ -72,9 +85,22 @@ export const resolvers: Resolvers<Context> = {
         },
       });
     },
-  },
+
+    combinedData: async () => {
+      const characterCount = await fetchCharactersCount();
+      const localCharacterNames = await getCharacterNames();
+    
+      return {
+        characterCount,
+        localCharacterNames,
+      };
+    },
+
+  }, //as QueryResolvers<Context>, // Adjusted type declaration for Query
+
   Mutation: {
-    updateFilm: async (_parent, { id, director, title }) => {
+    //updateFilm: async (_parent: any, { id, director, title }: { id: number, director: string, title: string }) => {
+      updateFilm: async (_parent, { id, director, title }) => {
       const updatedFilm = await prisma.film.update({
         where: { id: Number(id) },
         data: {
@@ -96,11 +122,13 @@ export const resolvers: Resolvers<Context> = {
 
       return updatedFilm;
     },
+    //createCharacter: async (_parent: any, { input }: { input: { name: string, height?: string, mass?: string, hairColor?: string, skinColor?: string, eyeColor?: string, birthYear?: string, gender?: string } }) => {
     createCharacter: async (_parent, { input }) => {
       return prisma.character.create({
         data: input,
       });
     },
+    //updateCharacter: async (_parent: any, { id, input }: { id: number, input: { name?: string, height?: string, mass?: string, hairColor?: string, skinColor?: string, eyeColor?: string, birthYear?: string, gender?: string } }) => {
     updateCharacter: async (_parent, { id, input }) => {
       const updatedCharacter = await prisma.character.update({
         where: { id: Number(id) },
@@ -120,12 +148,13 @@ export const resolvers: Resolvers<Context> = {
 
       return updatedCharacter;
     },
-    deleteCharacter: async (_parent, { id }) => {
+    //deleteCharacter: async (_parent: any, { id }: { id: number }) => {
+      deleteCharacter: async (_parent, { id }) => {
       await prisma.character.delete({
         where: { id: Number(id) },
       });
 
       return id;
     },
-  },
+  } , //as MutationResolvers<Context>, // Adjusted type declaration for Mutation
 };

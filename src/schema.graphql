@@ -1,10 +1,11 @@
 type ApiRoot {
   films: [Film]
-  Character: [Character]
+  characters: [Character]
   planets: [Planet]
   species: [Species]
   startships: [Starship]
   vehicles: [Vehicle]
+  combinedData: [CombinedData]
 }
 
 type Film {
@@ -105,6 +106,11 @@ type Species {
   films: [Film]
 }
 
+type CombinedData {
+  characterCount: Int!
+  localCharacterNames: [String!]!
+}
+
 type Query {
   root: ApiRoot
   # Obtener un personaje por ID
@@ -117,6 +123,8 @@ type Query {
   vehicle(id: ID!): Vehicle
   # Obtener un planeta por ID
   planet(id: ID!): Planet
+  species(id: ID!): Species
+  combinedData: CombinedData!
 }
 
 type Mutation {
@@ -127,7 +135,7 @@ type Mutation {
   # Eliminar un personaje por ID
   deleteCharacter(id: ID!): ID
   ########
-  # updateFilm(id: id!, title: String!, director: String!): Film
+  updateFilm(id: ID!, title: String!, director: String!): Film
   ########
 }
 

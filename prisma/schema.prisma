@@ -13,7 +13,7 @@ datasource db {
 // Define the Film model
 model Film {
   id              Int         @id @default(autoincrement())
-  title           String
+  title           String      @unique
   director        String
   releaseDate     DateTime
   episodeID       Int?
@@ -28,7 +28,7 @@ model Film {
 // Define the Character model
 model Character {
   id           Int       @id @default(autoincrement())
-  name         String
+  name         String    @unique
   height       String?
   mass         String?
   hairColor    String?
