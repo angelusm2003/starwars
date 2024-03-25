@@ -116,7 +116,7 @@ type Query {
   # Obtener un personaje por ID
   character(id: ID!): Character
   # Obtener una película por ID
-  film(id: ID!): Film
+  getFilm(id: ID!): Film
   # Obtener una nave espacial por ID
   starship(id: ID!): Starship
   # Obtener un vehículo por ID

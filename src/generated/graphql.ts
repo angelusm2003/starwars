@@ -128,7 +128,7 @@ export type Query = {
   __typename?: 'Query';
   character?: Maybe<Character>;
   combinedData: CombinedData;
-  film?: Maybe<Film>;
+  getFilm?: Maybe<Film>;
   planet?: Maybe<Planet>;
   root?: Maybe<ApiRoot>;
   species?: Maybe<Species>;
@@ -142,7 +142,7 @@ export type QueryCharacterArgs = {
 };
 
 
-export type QueryFilmArgs = {
+export type QueryGetFilmArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -404,7 +404,7 @@ export type PlanetResolvers<ContextType = any, ParentType extends ResolversParen
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   character?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType, RequireFields<QueryCharacterArgs, 'id'>>;
   combinedData?: Resolver<ResolversTypes['CombinedData'], ParentType, ContextType>;
-  film?: Resolver<Maybe<ResolversTypes['Film']>, ParentType, ContextType, RequireFields<QueryFilmArgs, 'id'>>;
+  getFilm?: Resolver<Maybe<ResolversTypes['Film']>, ParentType, ContextType, RequireFields<QueryGetFilmArgs, 'id'>>;
   planet?: Resolver<Maybe<ResolversTypes['Planet']>, ParentType, ContextType, RequireFields<QueryPlanetArgs, 'id'>>;
   root?: Resolver<Maybe<ResolversTypes['ApiRoot']>, ParentType, ContextType>;
   species?: Resolver<Maybe<ResolversTypes['Species']>, ParentType, ContextType, RequireFields<QuerySpeciesArgs, 'id'>>;
